@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bonki SiteLink Uganda — Find Trucks, Equipment & Construction Professionals</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#e85d04">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --orange:#e85d04; --orange-light:#f48c06; --black:#0d0d0d; --white:#f8f5f0; --border-dark:rgba(255,255,255,0.08); --border-light:rgba(0,0,0,0.1); --text-muted:#888; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: #f8f5f0; color: #1a1a1a; overflow-x: hidden; }
+
+    /* HEADER */
+    header { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(13,13,13,0.96); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-dark); height: 68px; padding: 0 5vw; display: flex; align-items: center; justify-content: space-between; }
+    .logo-wrap { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-icon { width: 40px; height: 40px; background: var(--orange); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 20px; color: white; flex-shrink: 0; overflow: hidden; }
+    .logo-icon img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; display: block; }
+    .logo-text { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.3rem; color: white; }
+    .logo-text span { color: var(--orange); }
+    nav { display: flex; align-items: center; gap: 4px; }
+    nav a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.88rem; font-weight: 500; padding: 6px 14px; border-radius: 6px; transition: all 0.2s; }
+    nav a:hover { color: white; background: rgba(255,255,255,0.08); }
+    .btn-list { background: var(--orange); color: white; border: none; padding: 9px 20px; border-radius: 8px; margin-left: 8px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.88rem; cursor: pointer; transition: all 0.2s; }
+    .btn-list:hover { background: var(--orange-light); transform: translateY(-1px); }
+
+    /* HERO */
+    .hero { position: relative; height: 100vh; min-height: 600px; display: flex; align-items: center; overflow: hidden; background: #1a1a1a; }
+    .hero-bg-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: 0; }
+    .hero-overlay { position: absolute; inset: 0; z-index: 1; background: linear-gradient(135deg, rgba(13,13,13,0.85) 0%, rgba(13,13,13,0.55) 55%, rgba(232,93,4,0.25) 100%); }
+    .hero-content { position: relative; z-index: 2; padding: 0 5vw; max-width: 780px; animation: fadeUp 0.8s ease both; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:translateY(0);} }
+    .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(232,93,4,0.2); border: 1px solid rgba(232,93,4,0.5); color: var(--orange-light); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 14px; border-radius: 100px; margin-bottom: 24px; }
+    .hero-tag::before { content:''; width:6px; height:6px; background:var(--orange); border-radius:50%; animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(0.7);} }
+    .hero h1 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(3rem,8vw,3.5rem); font-weight: 900; line-height: 1.1; letter-spacing: -0.01em; color: white; text-transform: uppercase; margin-bottom: 20px; }
+    .hero h1 em { font-style: normal; color: var(--orange); display: block; }
+    .hero p { color: rgba(255,255,255,0.7); font-size: 1.1rem; max-width: 500px; line-height: 1.65; margin-bottom: 40px; font-weight: 300; }
+    .search-wrap { display: flex; max-width: 600px; background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+    .search-wrap select { background: #f2ede6; border: none; outline: none; padding: 16px 18px; color: #1a1a1a; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; min-width: 160px; cursor: pointer; border-right: 1px solid #e0d8ce; }
+    .search-wrap input { flex: 1; background: transparent; border: none; outline: none; padding: 16px 20px; color: #1a1a1a; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; }
+    .search-wrap input::placeholder { color: #aaa; }
+    .search-btn { background: var(--orange); border: none; padding: 14px 28px; color: white; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+    .search-btn:hover { background: var(--orange-light); }
+    .hero-stats { display: flex; gap: 36px; margin-top: 40px; }
+    .h-stat { display: flex; flex-direction: column; }
+    .h-stat strong { font-family: 'Barlow Condensed', sans-serif; font-size: 2rem; font-weight: 800; color: white; line-height: 1; }
+    .h-stat span { font-size: 0.75rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px; }
+
+    /* SECTIONS */
+    .section { padding: 80px 5vw; }
+    .section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 36px; }
+    .section-header h2 { font-family: 'Barlow Condensed', sans-serif; font-size: 2.2rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.01em; color: #1a1a1a; }
+    .section-header h2 span { color: var(--orange); }
+    .see-all { color: var(--orange); font-size: 0.85rem; font-weight: 600; text-decoration: none; text-transform: uppercase; letter-spacing: 0.06em; transition: opacity 0.2s; }
+    .see-all:hover { opacity: 0.7; }
+
+    /* CATEGORIES */
+    .categories-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr)); gap: 14px; }
+    .cat-card { background: white; border: 2px solid var(--border-light); border-radius: 14px; overflow: hidden; cursor: pointer; transition: all 0.25s; position: relative; }
+    .cat-card::before { content:''; position:absolute; bottom:0; left:0; right:0; height:3px; background:var(--orange); transform:scaleX(0); transition:transform 0.3s; z-index:2; }
+    .cat-card:hover { border-color: var(--orange); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(232,93,4,0.12); }
+    .cat-card:hover::before { transform: scaleX(1); }
+    .cat-img-wrap { width:100%; height:100px; background:#f2ede6; overflow:hidden; position:relative; }
+    .cat-img-wrap img { width:100%; height:100%; object-fit:cover; object-position:center; transition:transform 0.4s; display:block; }
+    .cat-card:hover .cat-img-wrap img { transform: scale(1.08); }
+    .cat-img-placeholder { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:2.2rem; background:#f2ede6; }
+    .cat-info { padding: 12px 14px 14px; }
+    .cat-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.03em; color: #1a1a1a; }
+    .cat-count { font-size: 0.75rem; color: var(--text-muted); margin-top: 3px; }
+
+    /* LISTINGS */
+    .filter-bar { display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; align-items: center; }
+    .filter-pill { background: white; border: 1px solid var(--border-light); color: #666; padding: 7px 16px; border-radius: 100px; font-size: 0.82rem; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+    .filter-pill:hover, .filter-pill.active { background: var(--orange); border-color: var(--orange); color: white; font-weight: 600; }
+    .listings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 20px; }
+    .listing-card { background: white; border: 1px solid var(--border-light); border-radius: 16px; overflow: hidden; transition: all 0.25s; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .listing-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,0.12); border-color: rgba(232,93,4,0.3); }
+    .card-top { background: linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 100%); padding: 20px; display: flex; align-items: center; gap: 14px; position: relative; overflow: hidden; }
+    .card-top::after { content:''; position:absolute; top:-30px; right:-30px; width:100px; height:100px; background:rgba(232,93,4,0.15); border-radius:50%; }
+    .card-avatar { width:52px; height:52px; border-radius:12px; background:var(--orange); display:flex; align-items:center; justify-content:center; font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:1.3rem; color:white; flex-shrink:0; z-index:1; }
+    .card-avatar.blue{background:#2563eb;} .card-avatar.green{background:#16a34a;} .card-avatar.purple{background:#7c3aed;} .card-avatar.teal{background:#0891b2;}
+    .card-top-info { z-index:1; }
+    .card-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.1rem; color: white; letter-spacing: 0.02em; }
+    .card-category { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .verified-badge { margin-left:auto; z-index:1; background:rgba(74,222,128,0.15); border:1px solid rgba(74,222,128,0.3); color:#4ade80; font-size:0.7rem; font-weight:700; padding:3px 8px; border-radius:100px; text-transform:uppercase; letter-spacing:0.05em; white-space:nowrap; }
+    .card-body { padding: 18px 20px; }
+    .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+    .tag { background:#f2ede6; color:#666; font-size:0.75rem; padding:4px 10px; border-radius:6px; display:flex; align-items:center; gap:4px; }
+    .tag.location { background:rgba(22,163,74,0.08); color:#16a34a; }
+    .tag.type { background:rgba(37,99,235,0.08); color:#2563eb; }
+    .tag.plate { background:rgba(232,93,4,0.08); color:var(--orange); font-weight:600; font-family:'Barlow Condensed',sans-serif; letter-spacing:0.05em; }
+    .card-desc { font-size: 0.85rem; color: #666; line-height: 1.6; margin-bottom: 16px; }
+    .card-footer { display:flex; align-items:center; justify-content:space-between; padding-top:14px; border-top:1px solid #f0ebe3; }
+    .card-price { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--orange); }
+    .btn-contact { background: var(--orange); color: white; border: none; padding: 8px 18px; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.82rem; cursor: pointer; transition: all 0.2s; }
+    .btn-contact:hover { background: var(--orange-light); }
+    .report-btn { background:none; border:none; color:#ccc; font-size:0.75rem; cursor:pointer; padding:6px 0; transition:color 0.2s; display:block; margin-top:8px; }
+    .report-btn:hover { color:#ff6b4a; }
+    .load-more-wrap { text-align:center; margin-top:36px; }
+    .btn-load-more { background:white; border:2px solid var(--orange); color:var(--orange); padding:12px 36px; border-radius:10px; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1rem; text-transform:uppercase; cursor:pointer; transition:all 0.2s; }
+    .btn-load-more:hover { background:var(--orange); color:white; }
+
+    /* HOW IT WORKS */
+    .how-section { background: #1a1a1a; padding: 80px 5vw; }
+    .how-section .section-header h2 { color: white; }
+    .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 24px; }
+    .step-card { background: rgba(255,255,255,0.04); border: 1px solid var(--border-dark); border-radius: 16px; overflow: hidden; transition: all 0.25s; }
+    .step-card:hover { border-color: var(--orange); transform: translateY(-4px); }
+    .step-img-wrap { width:100%; height:160px; background:rgba(255,255,255,0.06); overflow:hidden; position:relative; }
+    .step-img-wrap img { width:100%; height:100%; object-fit:cover; transition:transform 0.4s; display:block; }
+    .step-card:hover .step-img-wrap img { transform: scale(1.06); }
+    .step-img-placeholder { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:3rem; }
+    .step-num { font-family:'Barlow Condensed',sans-serif; font-size:3rem; font-weight:900; color:rgba(232,93,4,0.3); line-height:1; padding:16px 20px 0; }
+    .step-title { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1.1rem; color:white; text-transform:uppercase; letter-spacing:0.03em; padding:8px 20px 6px; }
+    .step-desc { font-size:0.85rem; color:rgba(255,255,255,0.5); line-height:1.65; padding:0 20px 20px; }
+
+    /* CTA BANNER */
+    .cta-banner { margin:0 5vw 80px; background:linear-gradient(135deg,var(--orange) 0%,var(--orange-light) 100%); border-radius:20px; padding:50px 48px; display:flex; align-items:center; justify-content:space-between; gap:24px; overflow:hidden; position:relative; }
+    .cta-banner::before { content:'UG'; position:absolute; right:-20px; top:-40px; font-family:'Barlow Condensed',sans-serif; font-size:200px; font-weight:900; color:rgba(255,255,255,0.08); pointer-events:none; line-height:1; }
+    .cta-text h3 { font-family:'Barlow Condensed',sans-serif; font-size:2rem; font-weight:900; color:white; text-transform:uppercase; margin-bottom:8px; }
+    .cta-text p { color:rgba(255,255,255,0.8); font-size:0.95rem; line-height:1.6; max-width:400px; }
+    .cta-btns { display:flex; gap:12px; flex-shrink:0; flex-wrap:wrap; }
+    .btn-cta-white { background:white; color:var(--orange); border:none; padding:13px 28px; border-radius:10px; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1rem; text-transform:uppercase; letter-spacing:0.05em; cursor:pointer; transition:all 0.2s; white-space:nowrap; }
+    .btn-cta-white:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,0.2); }
+    .btn-cta-outline { background:transparent; color:white; border:2px solid rgba(255,255,255,0.5); padding:13px 28px; border-radius:10px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1rem; text-transform:uppercase; letter-spacing:0.05em; cursor:pointer; transition:all 0.2s; white-space:nowrap; }
+    .btn-cta-outline:hover { border-color:white; background:rgba(255,255,255,0.1); }
+
+    /* NEWSLETTER */
+    .newsletter-section { background:#f2ede6; padding:60px 5vw; text-align:center; }
+    .newsletter-section h3 { font-family:'Barlow Condensed',sans-serif; font-size:1.8rem; font-weight:900; text-transform:uppercase; color:#1a1a1a; margin-bottom:8px; }
+    .newsletter-section h3 span { color:var(--orange); }
+    .newsletter-section p { color:#888; font-size:0.9rem; margin-bottom:24px; }
+    .newsletter-form { display:flex; max-width:480px; margin:0 auto 16px; background:white; border-radius:10px; overflow:hidden; border:1px solid #e0d8ce; }
+    .newsletter-form input { flex:1; border:none; outline:none; padding:14px 18px; font-family:'DM Sans',sans-serif; font-size:0.9rem; color:#1a1a1a; }
+    .newsletter-form input::placeholder { color:#bbb; }
+    .newsletter-form button { background:var(--orange); border:none; color:white; padding:14px 24px; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.95rem; text-transform:uppercase; cursor:pointer; transition:background 0.2s; white-space:nowrap; }
+    .newsletter-form button:hover { background:var(--orange-light); }
+    .whatsapp-channel-btn { display:inline-flex; align-items:center; gap:8px; background:#25d366; color:white; padding:11px 24px; border-radius:10px; font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.9rem; text-decoration:none; transition:all 0.2s; }
+    .whatsapp-channel-btn:hover { background:#1ebe57; transform:translateY(-1px); }
+
+    /* FOOTER */
+    footer { background:#0d0d0d; padding:48px 5vw 32px; border-top:1px solid var(--border-dark); }
+    .footer-top { display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr; gap:40px; margin-bottom:40px; }
+    .footer-brand p { color:rgba(255,255,255,0.4); font-size:0.85rem; line-height:1.65; margin-top:12px; max-width:220px; }
+    .footer-col h4 { font-family:'Barlow Condensed',sans-serif; font-size:0.9rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--orange); margin-bottom:14px; }
+    .footer-col a { display:block; color:rgba(255,255,255,0.7); text-decoration:none; font-size:0.88rem; margin-bottom:8px; transition:color 0.2s; }
+    .footer-col a:hover { color:var(--orange); }
+    .footer-bottom { display:flex; align-items:center; justify-content:space-between; padding-top:24px; border-top:1px solid var(--border-dark); font-size:0.8rem; color:rgba(255,255,255,0.3); flex-wrap:wrap; gap:10px; }
+    .ug-flag { display:inline-flex; gap:3px; margin-left:6px; vertical-align:middle; }
+    .ug-flag span { display:inline-block; width:8px; height:12px; border-radius:1px; }
+    .bubu-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(232,93,4,0.15); border:1px solid rgba(232,93,4,0.3); color:var(--orange-light); font-size:0.72rem; font-weight:700; padding:4px 10px; border-radius:100px; margin-top:12px; text-transform:uppercase; letter-spacing:0.06em; }
+
+    /* MODAL */
+    .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); backdrop-filter:blur(8px); z-index:1000; align-items:center; justify-content:center; padding:20px; }
+    .modal-overlay.open { display:flex; }
+    .modal { background:white; border-radius:20px; padding:36px; max-width:520px; width:100%; position:relative; animation:slideUp 0.3s ease; max-height:90vh; overflow-y:auto; }
+    @keyframes slideUp { from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);} }
+    .modal-close { position:absolute; top:16px; right:16px; background:#f2ede6; border:none; color:#1a1a1a; width:32px; height:32px; border-radius:8px; cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; }
+    .modal h3 { font-family:'Barlow Condensed',sans-serif; font-size:1.5rem; font-weight:800; text-transform:uppercase; margin-bottom:4px; color:#1a1a1a; }
+    .modal-sub { color:#888; font-size:0.85rem; margin-bottom:20px; }
+    .modal-detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }
+    .detail-box { background:#f8f5f0; border-radius:10px; padding:12px 14px; }
+    .detail-box .label { font-size:0.72rem; color:#999; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:4px; }
+    .detail-box .value { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1rem; color:#1a1a1a; }
+    .modal-desc { font-size:0.88rem; color:#666; line-height:1.7; margin-bottom:20px; }
+    .modal-contact-btn { width:100%; background:var(--orange); color:white; border:none; padding:14px; border-radius:10px; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1.1rem; text-transform:uppercase; letter-spacing:0.05em; cursor:pointer; transition:all 0.2s; margin-bottom:10px; }
+    .modal-contact-btn:hover { background:var(--orange-light); }
+    .modal-wa-btn { width:100%; background:#25d366; color:white; border:none; padding:12px; border-radius:10px; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1rem; text-transform:uppercase; cursor:pointer; transition:all 0.2s; }
+    .modal-wa-btn:hover { background:#1ebe57; }
+    .review-section { margin-top:16px; padding-top:16px; border-top:1px solid #f0ebe3; }
+    .review-section h4 { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.95rem; text-transform:uppercase; color:#1a1a1a; margin-bottom:12px; }
+    .star-select { display:flex; gap:6px; margin-bottom:10px; }
+    .star-btn { background:none; border:none; font-size:1.4rem; cursor:pointer; color:#ddd; transition:color 0.15s; }
+    .star-btn.active { color:#f48c06; }
+    .review-input { width:100%; border:1px solid #e8e0d4; border-radius:8px; padding:10px 14px; font-family:'DM Sans',sans-serif; font-size:0.88rem; outline:none; resize:none; min-height:70px; background:#f8f5f0; }
+    .review-input:focus { border-color:var(--orange); }
+    .btn-review { background:var(--orange); color:white; border:none; padding:10px 20px; border-radius:8px; font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.85rem; cursor:pointer; transition:all 0.2s; }
+    .btn-review:hover { background:var(--orange-light); }
+
+    /* STATES */
+    .loading-state { grid-column:1/-1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:60px; gap:16px; }
+    .spinner { width:40px; height:40px; border:3px solid #f0ebe3; border-top-color:var(--orange); border-radius:50%; animation:spin 0.8s linear infinite; }
+    @keyframes spin { to{transform:rotate(360deg);} }
+    .loading-state p { color:#999; font-size:0.9rem; }
+    .empty-state { grid-column:1/-1; text-align:center; padding:60px; color:#999; }
+    .empty-icon { font-size:3rem; margin-bottom:12px; }
+    .divider { height:1px; background:var(--border-light); margin:0 5vw; }
+
+    /* WHATSAPP FLOAT */
+    .wa-float { position:fixed; bottom:28px; right:28px; z-index:999; display:flex; flex-direction:column; align-items:flex-end; gap:10px; }
+    .wa-float-btn { width:58px; height:58px; background:#25d366; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 24px rgba(37,211,102,0.4); cursor:pointer; transition:all 0.2s; text-decoration:none; animation:waFloat 3s ease-in-out infinite; }
+    .wa-float-btn:hover { transform:scale(1.1); box-shadow:0 10px 32px rgba(37,211,102,0.5); animation:none; }
+    @keyframes waFloat { 0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);} }
+    .wa-float-btn svg { width:30px; height:30px; fill:white; }
+    .wa-tooltip { background:#1a1a1a; color:white; padding:6px 14px; border-radius:8px; font-size:0.82rem; font-weight:600; white-space:nowrap; opacity:0; transform:translateX(10px); transition:all 0.2s; pointer-events:none; }
+    .wa-float:hover .wa-tooltip { opacity:1; transform:translateX(0); }
+
+    @media(max-width:768px) { nav a:not(.btn-list){display:none;} .footer-top{grid-template-columns:1fr 1fr;} .cta-banner{flex-direction:column;padding:32px 24px;} .hero-stats{gap:20px;} .modal-detail-grid{grid-template-columns:1fr;} }
+    @media(max-width:480px) { .search-wrap select{display:none;} .footer-top{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+
+<header>
+  <a class="logo-wrap" href="bonki-sitelink.html">
+    <div class="logo-icon"><img src="images/logo.jpeg" alt="Logo" onerror="this.style.display='none';this.parentElement.textContent='B'"></div>
+    <div class="logo-text">Bonki <span>SiteLink</span></div>
+  </a>
+  <nav>
+    <a href="#listings-section">Browse All</a>
+    <a href="#categories-section">Categories</a>
+    <a href="#how-section">How It Works</a>
+    <a href="sitelink-about.html">About Us</a>
+    
+    <button class="btn-list" onclick="window.location.href='sitelink-register2.html'">List Your Business</button>
+  </nav>
+</header>
+
+<section class="hero">
+  <img class="hero-bg-img" src="images/view2.jpeg" alt="Construction" onerror="this.style.display='none'">
+  <div style="position:absolute;inset:0;background:linear-gradient(135deg,#1a1a1a,#2d1a0a);z-index:-1"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-tag">🇺🇬 Uganda's Construction Platform</div>
+    <h1>Build Uganda <em>Smarter & Faster</em></h1>
+    <p>Connect with verified truck drivers, excavator operators, hardware suppliers and construction professionals across Uganda — all in one place.</p>
+    <div class="search-wrap">
+      <select id="categoryFilter" onchange="applyFilters()">
+        <option value="">All Categories</option>
+        <option value="Truck">🚛 Trucks & Tippers</option>
+        <option value="Excavator">🚜 Excavators</option>
+        <option value="Hardware">🏗️ Hardware Suppliers</option>
+        <option value="Engineer">👷 Engineers</option>
+        <option value="Electrician">⚡ Electricians</option>
+        <option value="Plumber">🔧 Plumbers</option>
+        <option value="Painter">🎨 Painters</option>
+        <option value="CCTV">📷 CCTV Installers</option>
+        <option value="Welder">🔩 Welders</option>
+        <option value="Tiler">🪟 Tilers</option>
+      </select>
+      <input type="text" id="searchInput" placeholder="Search by name, location, service…">
+      <button class="search-btn" onclick="handleSearch()">Search</button>
+    </div>
+    <div class="hero-stats">
+      <div class="h-stat"><strong id="statTotal">…</strong><span>Listed Providers</span></div>
+      <div class="h-stat"><strong>12+</strong><span>Districts</span></div>
+      <div class="h-stat"><strong>500+</strong><span>Projects Done</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="categories-section">
+  <div class="section-header">
+    <h2>Browse by <span>Category</span></h2>
+    <a href="#listings-section" class="see-all">View all →</a>
+  </div>
+  <div class="categories-grid">
+    <div class="cat-card" onclick="filterByCategory('Truck')"><div class="cat-img-wrap"><img src="images/truck.jpeg" alt="Trucks" onerror="this.style.display='none'"><div class="cat-img-placeholder">🚛</div></div><div class="cat-info"><div class="cat-name">Trucks & Tippers</div><div class="cat-count" id="cat-Truck">— listed</div></div></div>
+    <div class="cat-card" onclick="filterByCategory('Excavator')"><div class="cat-img-wrap"><img src="images/excavator.jpeg" alt="Excavators" onerror="this.style.display='none'"><div class="cat-img-placeholder">🚜</div></div><div class="cat-info"><div class="cat-name">Excavators</div><div class="cat-count" id="cat-Excavator">— listed</div></div></div>
+    <div class="cat-card" onclick="filterByCategory('Hardware')"><div class="cat-img-wrap"><img src="images/hardware.jpeg" alt="Hardware" onerror="this.style.display='none'"><div class="cat-img-placeholder">🏗️</div></div><div class="cat-info"><div class="cat-name">Hardware & Materials</div><div class="cat-count" id="cat-Hardware">— listed</div></div></div>
+    <div class="cat-card" onclick="filterByCategory('Engineer')"><div class="cat-img-wrap"><img src="images/engineer.jpeg" alt="Engineers" onerror="this.style.display='none'"><div class="cat-img-placeholder">👷</div></div><div class="cat-info"><div class="cat-name">Engineers</div><div class="cat-count" id="cat-Engineer">— listed</div></div></div>
+    <div class="cat-card" onclick="filterByCategory('Electrician')"><div class="cat-img-wrap"><img src="images/WhatsApp Image 2026-04-16 at 10.30.52 PM.jpeg" alt="Electricians" onerror="this.style.display='none'"><div class="cat-img-placeholder">⚡</div></div><div class="cat-info"><div class="cat-name">Electricians</div><div class="cat-count" id="cat-Electrician">— listed</div></div></div>
+    <div class="cat-card" onclick="filterByCategory('Plumber')"><div class="cat-img-wrap"><img src="images/plumber.jpeg" alt="Plumbers" onerror="this.style.display='none'"><div class="cat-img-placeholder">🔧</div></div><div class="cat-info"><div class="cat-name">Plumbers</div><div class="cat-count" id="cat-Plumber">— listed</div></div></div>
+    <div class="cat-card" onclick="filterByCategory('Painter')"><div class="cat-img-wrap"><img src="images/painter.jpeg" alt="Painters" onerror="this.style.display='none'"><div class="cat-img-placeholder">🎨</div></div><div class="cat-info"><div class="cat-name">Painters</div><div class="cat-count" id="cat-Painter">— listed</div></div></div>
+    <div class="cat-card" onclick="filterByCategory('CCTV')"><div class="cat-img-wrap"><img src="images/cctv installers.jpeg" alt="CCTV" onerror="this.style.display='none'"><div class="cat-img-placeholder">📷</div></div><div class="cat-info"><div class="cat-name">CCTV Installers</div><div class="cat-count" id="cat-CCTV">— listed</div></div></div>
+    <div class="cat-card" onclick="filterByCategory('Welder')"><div class="cat-img-wrap"><img src="images/welder.jpeg" alt="Welders" onerror="this.style.display='none'"><div class="cat-img-placeholder">🔩</div></div><div class="cat-info"><div class="cat-name">Welders</div><div class="cat-count" id="cat-Welder">— listed</div></div></div>
+    <div class="cat-card" onclick="filterByCategory('Tiler')"><div class="cat-img-wrap"><img src="images/tilers.jpeg" alt="Tilers" onerror="this.style.display='none'"><div class="cat-img-placeholder">🪟</div></div><div class="cat-info"><div class="cat-name">Tilers</div><div class="cat-count" id="cat-Tiler">— listed</div></div></div>
+    <div class="cat-card" onclick="filterByCategory('Architect')"><div class="cat-img-wrap"><img src="images/Architecture .jpeg" alt="Architects" onerror="this.style.display='none'"><div class="cat-img-placeholder">📐</div></div><div class="cat-info"><div class="cat-name">Architects</div><div class="cat-count" id="cat-Architect">— listed</div></div></div>
+    <div class="cat-card" onclick="filterByCategory('Surveyor')"><div class="cat-img-wrap"><img src="images/surveyor .jpeg" alt="Surveyors" onerror="this.style.display='none'"><div class="cat-img-placeholder">🗺️</div></div><div class="cat-info"><div class="cat-name">Surveyors</div><div class="cat-count" id="cat-Surveyor">— listed</div></div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section" id="listings-section">
+  <div class="section-header">
+    <h2>Featured <span>Providers</span></h2>
+    <a href="#" class="see-all" id="listingsCount">Loading…</a>
+  </div>
+  <div class="filter-bar">
+    <span style="font-size:0.82rem;color:#999;margin-right:4px;">Filter:</span>
+    <div class="filter-pill active" onclick="filterListings(this,'all')">All</div>
+    <div class="filter-pill" onclick="filterListings(this,'Truck')">🚛 Trucks</div>
+    <div class="filter-pill" onclick="filterListings(this,'Excavator')">🚜 Excavators</div>
+    <div class="filter-pill" onclick="filterListings(this,'Hardware')">🏗️ Hardware</div>
+    <div class="filter-pill" onclick="filterListings(this,'Engineer')">👷 Engineers</div>
+    <div class="filter-pill" onclick="filterListings(this,'Electrician')">⚡ Electrical</div>
+    <div class="filter-pill" onclick="filterListings(this,'Painter')">🎨 Painters</div>
+    <div class="filter-pill" onclick="filterListings(this,'CCTV')">📷 CCTV</div>
+  </div>
+  <div class="listings-grid" id="listingsGrid">
+    <div class="loading-state"><div class="spinner"></div><p>Loading providers…</p></div>
+  </div>
+  <div class="load-more-wrap" id="loadMoreWrap" style="display:none">
+    <button class="btn-load-more" onclick="loadMore()">Load More Providers</button>
+  </div>
+</section>
+
+<section class="how-section" id="how-section">
+  <div class="section-header">
+    <h2 style="color:white">How <span>It Works</span></h2>
+  </div>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-img-wrap"><img src="images/search.jpeg" alt="Search" onerror="this.style.display='none'"><div class="step-img-placeholder">🔍</div></div>
+      <div class="step-num">01</div><div class="step-title">Search & Browse</div>
+      <div class="step-desc">Search for the service you need — trucks, excavators, hardware suppliers, engineers and more across Uganda.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-img-wrap"><img src="images/profile.jpeg" alt="View Profile" onerror="this.style.display='none'"><div class="step-img-placeholder">👁️</div></div>
+      <div class="step-num">02</div><div class="step-title">View Profile</div>
+      <div class="step-desc">See full details — nickname, contacts, truck plate number, services offered, location and pricing.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-img-wrap"><img src="images/direct contact .jpeg" alt="Connect" onerror="this.style.display='none'"><div class="step-img-placeholder">📞</div></div>
+      <div class="step-num">03</div><div class="step-title">Connect Directly</div>
+      <div class="step-desc">Call or WhatsApp the provider directly. No middleman. Fast, simple and reliable connections.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-img-wrap"><img src="images/workdone.jpeg" alt="Get Work Done" onerror="this.style.display='none'"><div class="step-img-placeholder">🏗️</div></div>
+      <div class="step-num">04</div><div class="step-title">Get Work Done</div>
+      <div class="step-desc">Your construction project moves forward with verified, trusted professionals from across Uganda.</div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-banner">
+  <div class="cta-text">
+    <h3>Are You a Driver, Operator or Supplier?</h3>
+    <p>List your truck, excavator, hardware shop or professional services on Bonki SiteLink and get discovered by hundreds of clients across Uganda.</p>
+  </div>
+  <div class="cta-btns">
+    <button class="btn-cta-white" onclick="window.location.href='sitelink-register2.html'">List Your Business</button>
+    <button class="btn-cta-outline" onclick="window.location.href='sitelink-pricing1.html'">View Pricing</button>
+  </div>
+</div>
+
+<div class="newsletter-section">
+  <h3>Stay <span>Updated</span></h3>
+  <p>Get notified when new providers list or new opportunities are posted across Uganda.</p>
+  <div class="newsletter-form">
+    <input type="email" id="newsletterEmail" placeholder="Enter your email address…">
+    <button onclick="subscribeEmail()">Subscribe</button>
+  </div>
+  <a href="https://whatsapp.com/channel/0029VaXXXXXXXXXXXXXXXX" target="_blank" class="whatsapp-channel-btn">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Follow our WhatsApp Channel
+  </a>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a class="logo-wrap" href="bonki-sitelink.html">
+        <div class="logo-icon"><img src="images/logo.jpeg" alt="Logo" onerror="this.style.display='none';this.parentElement.textContent='B'"></div>
+        <div class="logo-text">Bonki <span>SiteLink</span></div>
+      </a>
+      <p>Uganda's trusted construction platform — connecting builders, operators, suppliers and professionals nationwide.</p>
+      <div class="bubu-badge">🇺🇬 BUBU — Buy Uganda Build Uganda</div>
+    </div>
+    <div class="footer-col">
+      <h4>For Clients</h4>
+      <a href="#listings-section">Find Trucks</a>
+      <a href="#listings-section">Find Excavators</a>
+      <a href="#listings-section">Find Engineers</a>
+      <a href="#listings-section">Find Hardware</a>
+    </div>
+    <div class="footer-col">
+      <h4>For Providers</h4>
+      <a href="sitelink-register.html">List Your Business</a>
+      <a href="sitelink-pricing.html">Pricing</a>
+      <a href="sitelink-contact.html">Contact Us</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+    </div>
+    <div class="footer-col">
+      <h4>Bonki Enterprises</h4>
+      <a href="#">Bonki SmartJobs</a>
+      <a href="#">Bonki WiFi HotspotTech</a>
+      <a href="#">Bonki Game Zone</a>
+      <a href="terms.html">Terms of Use</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Bonki SiteLink Uganda — A Bonki Enterprises Product. Made with ❤️ in Uganda <span class="ug-flag"><span style="background:#000"></span><span style="background:#fcdc04"></span><span style="background:#de3108"></span></span></span>
+    <span>📧 hello@bonkijobs.ug · 📞 +256 704 014 566 / +256 775 256 007</span>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="contactModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h3 id="modalName">Provider Name</h3>
+    <div class="modal-sub" id="modalCat">Category · Location</div>
+    <div class="modal-detail-grid">
+      <div class="detail-box"><div class="label">Category</div><div class="value" id="modalCategory">—</div></div>
+      <div class="detail-box"><div class="label">Location</div><div class="value" id="modalLocation">—</div></div>
+      <div class="detail-box"><div class="label">Plate / ID</div><div class="value" id="modalPlate" style="color:var(--orange)">—</div></div>
+      <div class="detail-box"><div class="label">Rate</div><div class="value" id="modalRate" style="color:var(--orange)">—</div></div>
+    </div>
+    <p class="modal-desc" id="modalDesc">—</p>
+    <button class="modal-contact-btn" id="modalCallBtn">📞 Call Now</button>
+    <button class="modal-wa-btn" id="modalWaBtn">💬 WhatsApp Now</button>
+    <div class="review-section">
+      <h4>Leave a Review</h4>
+      <div class="star-select" id="starSelect">
+        <button class="star-btn" onclick="setStar(1)">★</button>
+        <button class="star-btn" onclick="setStar(2)">★</button>
+        <button class="star-btn" onclick="setStar(3)">★</button>
+        <button class="star-btn" onclick="setStar(4)">★</button>
+        <button class="star-btn" onclick="setStar(5)">★</button>
+      </div>
+      <textarea class="review-input" id="reviewText" placeholder="Share your experience with this provider…"></textarea>
+      <br><br>
+      <button class="btn-review" onclick="submitReview()">Submit Review</button>
+    </div>
+  </div>
+</div>
+
+<!-- WHATSAPP FLOAT -->
+<div class="wa-float">
+  <span class="wa-tooltip">Chat with us</span>
+  <a class="wa-float-btn" href="https://wa.me/256704014566" target="_blank">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+</div>
+
+<script>
+  const SUPABASE_URL = 'https://kpujqkhokqffiucopchd.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwdWpxa2hva3FmZml1Y29wY2hkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyNDQ2NjksImV4cCI6MjA5MTgyMDY2OX0.4r9_nan8DGvSaXoQQVc91oZ7Ty1srLkCM2MYWoxBviY';
+
+  let allProviders = [], currentFilter = 'all', currentPage = 0, currentProviderId = null, selectedStars = 0;
+  const PAGE_SIZE = 12;
+
+  async function fetchProviders() {
+    try {
+      const res = await fetch('${SUPABASE_URL}/rest/v1/sitelink_providers?status=eq.active&order=featured.desc,created_at.desc', { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ${SUPABASE_ANON_KEY}' } });
+      if (!res.ok) throw new Error();
+      allProviders = await res.json();
+      if (!allProviders.length) loadSample(); else init();
+    } catch { loadSample(); }
+  }
+
+  function loadSample() {
+    allProviders = [
+      {id:'1',nickname:'Kato Transports',category:'Truck',location:'Kampala',plate_number:'UAA 123B',phone:'0701234567',rate:'UGX 150,000/day',description:'Sino truck for sand, gravel and stone across Central Uganda. 5 years experience.',verified:true,featured:true},
+      {id:'2',nickname:'Mukasa Excavations',category:'Excavator',location:'Entebbe',plate_number:'UBA 456C',phone:'0712345678',rate:'UGX 300,000/day',description:'Excavator and tipper for land leveling and foundation digging. Available 24/7.',verified:true,featured:false},
+      {id:'3',nickname:'Nile Hardware Store',category:'Hardware',location:'Jinja',plate_number:'',phone:'0723456789',rate:'Negotiable',description:'Full hardware — cement, iron bars, roofing sheets, timber, tiles. Delivery available.',verified:false,featured:false},
+      {id:'4',nickname:'Eng. Ssali & Partners',category:'Engineer',location:'Kampala',plate_number:'',phone:'0734567890',rate:'UGX 500,000/project',description:'Licensed civil engineer. Plans, site supervision, quantity surveying.',verified:true,featured:true},
+      {id:'5',nickname:'Bright Electricals',category:'Electrician',location:'Mbarara',plate_number:'',phone:'0745678901',rate:'UGX 80,000/day',description:'Full electrical installations, solar systems, wiring for homes and offices.',verified:false,featured:false},
+      {id:'6',nickname:'Tipper King Uganda',category:'Truck',location:'Gulu',plate_number:'UCA 789D',phone:'0756789012',rate:'UGX 200,000/trip',description:'Large tippers for murram, sand, hardcore across Northern Uganda.',verified:true,featured:false},
+      {id:'7',nickname:'Pro Painters UG',category:'Painter',location:'Kampala',plate_number:'',phone:'0767890123',rate:'UGX 50,000/room',description:'Interior and exterior painting, texture finishes and waterproofing.',verified:false,featured:false},
+      {id:'8',nickname:'SafeEye CCTV',category:'CCTV',location:'Kampala',plate_number:'',phone:'0778901234',rate:'UGX 250,000/system',description:'CCTV installation, IP cameras, DVR/NVR setup for homes and offices.',verified:true,featured:false},
+    ];
+    init();
+  }
+
+  function init() { renderListings(allProviders); updateCounts(allProviders); document.getElementById('statTotal').textContent = allProviders.length + '+'; }
+
+  const avatarColors = ['','blue','green','purple','teal','','blue','green'];
+  function renderListings(providers) {
+    const grid = document.getElementById('listingsGrid');
+    const label = document.getElementById('listingsCount');
+    const page = providers.slice(0, (currentPage + 1) * PAGE_SIZE);
+    document.getElementById('loadMoreWrap').style.display = providers.length > PAGE_SIZE ? 'block' : 'none';
+    if (!providers.length) { grid.innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div><p>No providers found.</p></div>'; label.textContent = '0 found'; return; }
+    label.textContent = providers.length + ' provider' + (providers.length !== 1 ? 's' : '') + ' →';
+    grid.innerHTML = page.map((p,i) => `
+      <div class="listing-card" onclick="openModal('${p.id}')">
+        <div class="card-top">
+          <div class="card-avatar ${avatarColors[i%avatarColors.length]}">${p.nickname.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}</div>
+          <div class="card-top-info"><div class="card-name">${esc(p.nickname)}</div><div class="card-category">${esc(p.category)}</div></div>
+          ${p.verified ? '<span class="verified-badge">✓ Verified</span>' : ''}
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag location">📍 ${esc(p.location)}</span>
+            <span class="tag type">${esc(p.category)}</span>
+            ${p.plate_number ? '<span class="tag plate">'+esc(p.plate_number)+'</span>' : ''}
+          </div>
+          <div class="card-desc">${esc((p.description||'').slice(0,100))}…</div>
+          <div class="card-footer">
+            <div class="card-price">${esc(p.rate||'Negotiable')}</div>
+            <button class="btn-contact" onclick="event.stopPropagation();openModal('${p.id}')">View & Contact</button>
+          </div>
+          <button class="report-btn" onclick="event.stopPropagation();reportListing('${p.id}','${esc(p.nickname)}')">⚑ Report this listing</button>
+        </div>
+      </div>`).join('');
+  }
+
+  function loadMore() { currentPage++; applyFilters(); }
+
+  function openModal(id) {
+    const p = allProviders.find(x => String(x.id)===String(id)); if(!p) return;
+    currentProviderId = id; selectedStars = 0;
+    document.querySelectorAll('.star-btn').forEach(b=>b.classList.remove('active'));
+    document.getElementById('reviewText').value = '';
+    document.getElementById('modalName').textContent = p.nickname;
+    document.getElementById('modalCat').textContent = p.category + ' · ' + p.location;
+    document.getElementById('modalCategory').textContent = p.category;
+    document.getElementById('modalLocation').textContent = p.location;
+    document.getElementById('modalPlate').textContent = p.plate_number || '—';
+    document.getElementById('modalRate').textContent = p.rate || 'Negotiable';
+    document.getElementById('modalDesc').textContent = p.description || '—';
+    document.getElementById('modalCallBtn').onclick = () => window.open('tel:' + p.phone);
+    document.getElementById('modalCallBtn').textContent = '📞 Call ' + p.phone;
+    document.getElementById('modalWaBtn').onclick = () => window.open('https://wa.me/256' + p.phone.replace(/^0/,''));
+    document.getElementById('contactModal').classList.add('open');
+  }
+
+  function closeModal() { document.getElementById('contactModal').classList.remove('open'); }
+  document.getElementById('contactModal').addEventListener('click', function(e) { if(e.target===this) closeModal(); });
+
+  function setStar(n) { selectedStars = n; document.querySelectorAll('.star-btn').forEach((b,i) => b.classList.toggle('active', i<n)); }
+
+  async function submitReview() {
+    if (!selectedStars) { alert('Please select a star rating'); return; }
+    try {
+      await fetch('${SUPABASE_URL}/rest/v1/sitelink_reviews', { method:'POST', headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer ${SUPABASE_ANON_KEY}','Content-Type':'application/json','Prefer':'return=minimal'}, body:JSON.stringify({provider_id:currentProviderId,stars:selectedStars,review:document.getElementById('reviewText').value.trim(),created_at:new Date().toISOString()}) });
+      alert('✅ Thank you for your review!');
+      document.getElementById('reviewText').value = ''; selectedStars = 0; document.querySelectorAll('.star-btn').forEach(b=>b.classList.remove('active'));
+    } catch { alert('Could not submit review. Please try again.'); }
+  }
+
+  async function reportListing(id, name) {
+    const reason = prompt('Why are you reporting "${name}"?\n\nEnter your reason:'); if(!reason) return;
+    try {
+      await fetch('${SUPABASE_URL}/rest/v1/sitelink_reports', { method:'POST', headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer ${SUPABASE_ANON_KEY}','Content-Type':'application/json','Prefer':'return=minimal'}, body:JSON.stringify({provider_id:id,reason,created_at:new Date().toISOString()}) });
+      alert('✅ Report submitted. We will review this listing within 24 hours.');
+    } catch { alert('Could not submit report. Please call +256 704 014 566.'); }
+  }
+
+  async function subscribeEmail() {
+    const email = document.getElementById('newsletterEmail').value.trim(); if(!email){alert('Please enter your email');return;}
+    try {
+      await fetch('${SUPABASE_URL}/rest/v1/sitelink_subscribers', { method:'POST', headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer ${SUPABASE_ANON_KEY}','Content-Type':'application/json','Prefer':'return=minimal'}, body:JSON.stringify({email,subscribed_at:new Date().toISOString()}) });
+      alert('✅ Subscribed! You will receive updates from Bonki SiteLink.');
+      document.getElementById('newsletterEmail').value = '';
+    } catch { alert('Could not subscribe. Please try again.'); }
+  }
+
+  function filterListings(el, type) { document.querySelectorAll('.filter-pill').forEach(p=>p.classList.remove('active')); el.classList.add('active'); currentFilter=type; currentPage=0; applyFilters(); }
+  function filterByCategory(cat) { document.getElementById('listings-section').scrollIntoView({behavior:'smooth'}); document.getElementById('categoryFilter').value=cat; currentFilter=cat; currentPage=0; document.querySelectorAll('.filter-pill').forEach(p=>p.classList.remove('active')); applyFilters(); }
+  function handleSearch() { document.getElementById('listings-section').scrollIntoView({behavior:'smooth'}); currentPage=0; applyFilters(); }
+  function applyFilters() {
+    const q = document.getElementById('searchInput').value.toLowerCase().trim();
+    const cat = document.getElementById('categoryFilter').value;
+    const filtered = allProviders.filter(p => {
+      const matchCat = (!cat && currentFilter==='all') || p.category===cat || p.category===currentFilter || currentFilter==='all';
+      const matchQ = !q || p.nickname.toLowerCase().includes(q) || p.location.toLowerCase().includes(q) || (p.description||'').toLowerCase().includes(q);
+      return matchCat && matchQ;
+    });
+    renderListings(filtered);
+  }
+
+  function updateCounts(providers) {
+    ['Truck','Excavator','Hardware','Engineer','Electrician','Plumber','Painter','CCTV','Welder','Tiler','Architect','Surveyor'].forEach(cat => {
+      const el = document.getElementById('cat-'+cat); if(el) el.textContent = providers.filter(p=>p.category===cat).length + ' listed';
+    });
+  }
+
+  document.querySelectorAll('.cat-img-wrap img, .step-img-wrap img').forEach(img => {
+    const hide = () => { const ph = img.nextElementSibling; if(ph) ph.style.display='none'; };
+    if(img.complete && img.naturalWidth > 0) hide(); else img.addEventListener('load', hide);
+  });
+
+  function esc(str) { const d = document.createElement('div'); d.textContent = str||''; return d.innerHTML; }
+  document.getElementById('searchInput').addEventListener('keydown', e => { if(e.key==='Enter') handleSearch(); });
+  if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+
+  fetchProviders();
+</script>
+</body>
+</html>

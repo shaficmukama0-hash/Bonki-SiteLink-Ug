@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing — Bonki SiteLink Uganda</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --orange: #e85d04; --orange-light: #f48c06;
+      --black: #0d0d0d; --white: #f8f5f0;
+      --border-light: rgba(0,0,0,0.1); --border-dark: rgba(255,255,255,0.08);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: #f8f5f0; color: #1a1a1a; overflow-x: hidden; }
+
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(13,13,13,0.96); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-dark);
+      height: 68px; padding: 0 5vw;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo-wrap { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-icon { width: 40px; height: 40px; background: var(--orange); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 20px; color: white; overflow: hidden; }
+    .logo-icon img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+    .logo-text { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.3rem; color: white; }
+    .logo-text span { color: var(--orange); }
+    .btn-back { background: transparent; border: 1px solid var(--border-dark); color: rgba(255,255,255,0.6); padding: 8px 18px; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; text-decoration: none; }
+    .btn-back:hover { color: white; border-color: rgba(255,255,255,0.3); }
+
+    /* HERO */
+    .page-hero { background: linear-gradient(135deg, #1a1a1a 0%, #2d1a0a 100%); padding: 70px 5vw 60px; text-align: center; position: relative; overflow: hidden; }
+    .page-hero::before { content: ''; position: absolute; top: -150px; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(232,93,4,0.12) 0%, transparent 65%); pointer-events: none; }
+    .hero-tag { display: inline-flex; align-items: center; gap: 6px; background: rgba(232,93,4,0.15); border: 1px solid rgba(232,93,4,0.4); color: var(--orange-light); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 14px; border-radius: 100px; margin-bottom: 20px; }
+    .page-hero h1 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 900; color: white; text-transform: uppercase; margin-bottom: 14px; }
+    .page-hero h1 span { color: var(--orange); }
+    .page-hero p { color: rgba(255,255,255,0.55); font-size: 1.05rem; max-width: 500px; margin: 0 auto; line-height: 1.65; }
+
+    /* PRICING CARDS */
+    .pricing-section { padding: 70px 5vw; max-width: 1100px; margin: 0 auto; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-bottom: 60px; }
+
+    .price-card {
+      background: white; border: 2px solid var(--border-light);
+      border-radius: 20px; overflow: hidden;
+      transition: all 0.25s; position: relative;
+    }
+    .price-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(0,0,0,0.1); }
+    .price-card.featured { border-color: var(--orange); }
+
+    .popular-ribbon {
+      position: absolute; top: 16px; right: -8px;
+      background: var(--orange); color: white;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800; font-size: 0.75rem; text-transform: uppercase;
+      letter-spacing: 0.06em; padding: 4px 16px 4px 12px;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 8px 50%);
+    }
+
+    .card-header { padding: 28px 28px 20px; border-bottom: 1px solid #f0ebe3; }
+    .plan-icon { font-size: 2rem; margin-bottom: 12px; }
+    .plan-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.3rem; text-transform: uppercase; letter-spacing: 0.02em; color: #1a1a1a; margin-bottom: 6px; }
+    .plan-desc { font-size: 0.85rem; color: #888; line-height: 1.5; }
+    .plan-price { margin-top: 20px; }
+    .plan-price .amount { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 2.8rem; color: #1a1a1a; line-height: 1; }
+    .plan-price .amount.orange { color: var(--orange); }
+    .plan-price .period { font-size: 0.82rem; color: #999; margin-left: 4px; }
+    .plan-price .saving { display: inline-block; background: rgba(22,163,74,0.1); color: #16a34a; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 100px; margin-top: 6px; }
+
+    .card-features { padding: 24px 28px; }
+    .feature { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 12px; }
+    .feature-check { color: #16a34a; flex-shrink: 0; font-size: 0.95rem; margin-top: 1px; }
+    .feature-x { color: #ccc; flex-shrink: 0; font-size: 0.95rem; margin-top: 1px; }
+    .feature-text { font-size: 0.88rem; color: #444; line-height: 1.45; }
+    .feature-text.muted { color: #bbb; }
+
+    .card-footer { padding: 0 28px 28px; }
+    .btn-choose {
+      width: 100%; padding: 13px; border-radius: 10px; border: none;
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+      font-size: 1rem; text-transform: uppercase; letter-spacing: 0.04em;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .btn-choose.primary { background: var(--orange); color: white; }
+    .btn-choose.primary:hover { background: var(--orange-light); transform: translateY(-1px); }
+    .btn-choose.outline { background: transparent; color: #1a1a1a; border: 2px solid #e0d8ce; }
+    .btn-choose.outline:hover { border-color: var(--orange); color: var(--orange); }
+
+    /* FAQ */
+    .faq-section { background: white; padding: 70px 5vw; }
+    .faq-inner { max-width: 700px; margin: 0 auto; }
+    .section-title { font-family: 'Barlow Condensed', sans-serif; font-size: 2.2rem; font-weight: 900; text-transform: uppercase; color: #1a1a1a; margin-bottom: 36px; text-align: center; }
+    .section-title span { color: var(--orange); }
+
+    .faq-item { border-bottom: 1px solid #f0ebe3; }
+    .faq-q {
+      width: 100%; background: none; border: none;
+      padding: 20px 0; text-align: left; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem;
+      color: #1a1a1a; display: flex; justify-content: space-between; align-items: center;
+      gap: 16px;
+    }
+    .faq-arrow { font-size: 1.2rem; transition: transform 0.3s; flex-shrink: 0; color: var(--orange); }
+    .faq-item.open .faq-arrow { transform: rotate(180deg); }
+    .faq-a { display: none; padding: 0 0 20px; font-size: 0.88rem; color: #666; line-height: 1.7; }
+    .faq-item.open .faq-a { display: block; }
+
+    /* CTA */
+    .cta-section { background: linear-gradient(135deg, var(--orange) 0%, var(--orange-light) 100%); padding: 70px 5vw; text-align: center; }
+    .cta-section h2 { font-family: 'Barlow Condensed', sans-serif; font-size: 3rem; font-weight: 900; color: white; text-transform: uppercase; margin-bottom: 14px; }
+    .cta-section p { color: rgba(255,255,255,0.8); font-size: 1.05rem; max-width: 480px; margin: 0 auto 32px; line-height: 1.65; }
+    .btn-cta { background: white; color: var(--orange); border: none; padding: 15px 40px; border-radius: 12px; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.2rem; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+    .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,0.2); }
+
+    footer { background: #0d0d0d; padding: 32px 5vw; border-top: 1px solid rgba(255,255,255,0.06); text-align: center; }
+    footer p { color: rgba(255,255,255,0.3); font-size: 0.82rem; }
+
+    @media (max-width: 600px) {
+      .pricing-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a class="logo-wrap" href="bonki-sitelink.html">
+    <div class="logo-icon">
+      <img src="images/logo.jpeg" alt="Logo" onerror="this.style.display='none'; this.parentElement.textContent='B'">
+    </div>
+    <div class="logo-text">Bonki <span>SiteLink</span></div>
+  </a>
+  <a class="btn-back" href="bonki-sitelink.html">← Back to Home</a>
+</header>
+
+<div class="page-hero">
+  <div class="hero-tag">💰 Simple Pricing</div>
+  <h1>Affordable Plans for <span>Every Provider</span></h1>
+  <p>Pay once and get discovered by hundreds of clients across Uganda. No commission on jobs — you keep everything you earn.</p>
+</div>
+
+<div class="pricing-section">
+  <div class="pricing-grid">
+
+    <!-- MONTHLY -->
+    <div class="price-card">
+      <div class="card-header">
+        <div class="plan-icon">📅</div>
+        <div class="plan-name">Monthly Listing</div>
+        <div class="plan-desc">Perfect for trying it out first. Renew each month as long as you want.</div>
+        <div class="plan-price">
+          <span class="amount">50K</span>
+          <span class="period">UGX / month</span>
+        </div>
+      </div>
+      <div class="card-features">
+        <div class="feature"><span class="feature-check">✓</span><span class="feature-text">Your profile listed for 30 days</span></div>
+        <div class="feature"><span class="feature-check">✓</span><span class="feature-text">Visible to all clients searching your category</span></div>
+        <div class="feature"><span class="feature-check">✓</span><span class="feature-text">Direct calls & WhatsApp from clients</span></div>
+        <div class="feature"><span class="feature-check">✓</span><span class="feature-text">All Uganda coverage</span></div>
+        <div class="feature"><span class="feature-x">✗</span><span class="feature-text muted">Featured top position</span></div>
+        <div class="feature"><span class="feature-x">✗</span><span class="feature-text muted">Verified badge</span></div>
+      </div>
+      <div class="card-footer">
+        <button class="btn-choose outline" onclick="window.location.href='sitelink-register.html'">Get Started</button>
+      </div>
+    </div>
+
+    <!-- ANNUAL -->
+    <div class="price-card featured">
+      <div class="popular-ribbon">Most Popular</div>
+      <div class="card-header">
+        <div class="plan-icon">🏆</div>
+        <div class="plan-name">Annual Listing</div>
+        <div class="plan-desc">Best value. Pay once and be listed for the full year without worrying about monthly renewals.</div>
+        <div class="plan-price">
+          <span class="amount orange">400K</span>
+          <span class="period">UGX / year</span>
+          <div class="saving">Save UGX 200,000 vs monthly</div>
+        </div>
+      </div>
+      <div class="card-features">
+        <div class="feature"><span class="feature-check">✓</span><span class="feature-text">Your profile listed for full 12 months</span></div>
+        <div class="feature"><span class="feature-check">✓</span><span class="feature-text">Visible to all clients searching your category</span></div>
+        <div class="feature"><span class="feature-check">✓</span><span class="feature-text">Direct calls & WhatsApp from clients</span></div>
+        <div class="feature"><span class="feature-check">✓</span><span class="feature-text">All Uganda coverage</span></div>
+        <div class="feature"><span class="feature-check">✓</span><span class="feature-text">Priority listing position</span></div>
+        <div class="feature"><span class="feature-check">✓</span><span class="feature-text">Free Verified badge included</span></div>
+      </div>
+      <div class="card-footer">
+        <button class="btn-choose primary" onclick="window.location.href='sitelink-register.html'">Get Annual Plan</button>
+      </div>
+    </div>
+
+    <!-- FEATURED -->
+    <div class="price-card">
+      <div class="card-header">
+        <div class="plan-icon">⭐</div>
+        <div class="plan-name">Featured Spot</div>
+        <div class="plan-desc">Appear at the very top of search results. Maximum visibility for maximum orders.</div>
+        <div class="plan-price">
+          <span class="amount">150K</span>
+          <span class="period">UGX / month</span>
+        </div>
+      </div>
+      <div class="card-features">
+        <div class="feature"><span class="feature-check">✓</span><span class="feature-text">Top position in your category</span></div>
+        <div class="feature"><span class="feature-check">✓</span><span class="feature-text">Featured badge on your profile</span></div>
+        <div class="feature"><span class="feature-check">✓</span><span class="feature-text">First seen by every searching client</span></div>
+        <div class="feature"><span class="feature-check">✓</span><span class="feature-text">All Uganda coverage</span></div>
+        <div class="feature"><span class="feature-check">✓</span><span class="feature-text">Includes standard listing</span></div>
+        <div class="feature"><span class="feature-x">✗</span><span class="feature-text muted">Verified badge (add UGX 20K)</span></div>
+      </div>
+      <div class="card-footer">
+        <button class="btn-choose outline" onclick="window.location.href='sitelink-register.html'">Get Featured</button>
+      </div>
+    </div>
+
+    <!-- VERIFIED -->
+    <div class="price-card">
+      <div class="card-header">
+        <div class="plan-icon">✅</div>
+        <div class="plan-name">Verified Badge</div>
+        <div class="plan-desc">One-time add-on. Builds trust with clients and makes your listing stand out instantly.</div>
+        <div class="plan-price">
+          <span class="amount">20K</span>
+          <span class="period">UGX — one time</span>
+        </div>
+      </div>
+      <div class="card-features">
+        <div class="feature"><span class="feature-check">✓</span><span class="feature-text">Green ✓ Verified badge on profile</span></div>
+        <div class="feature"><span class="feature-check">✓</span><span class="feature-text">Increases client trust significantly</span></div>
+        <div class="feature"><span class="feature-check">✓</span><span class="feature-text">We verify your ID and business</span></div>
+        <div class="feature"><span class="feature-check">✓</span><span class="feature-text">Permanent — never expires</span></div>
+        <div class="feature"><span class="feature-check">✓</span><span class="feature-text">Add to any listing plan</span></div>
+      </div>
+      <div class="card-footer">
+        <button class="btn-choose outline" onclick="window.location.href='sitelink-register.html'">Add Verified Badge</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- NOTE ON PRICING -->
+  <div style="background:rgba(232,93,4,0.06);border:1px solid rgba(232,93,4,0.2);border-radius:16px;padding:24px 28px;margin-bottom:40px">
+    <h4 style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;text-transform:uppercase;color:#1a1a1a;margin-bottom:10px">📌 Important Note on Job Pricing</h4>
+    <p style="font-size:0.88rem;color:#555;line-height:1.7">The listing fee is paid to Bonki SiteLink only. Once a client contacts you, <strong>all job pricing is negotiated directly between you and the client</strong> — there is no commission, no middleman and no extra charges from us. You keep 100% of what you earn from every job.</p>
+  </div>
+
+</div>
+
+<!-- FAQ -->
+<div class="faq-section">
+  <div class="faq-inner">
+    <div class="section-title">Frequently Asked <span>Questions</span></div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">How do I pay for my listing? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Send the amount via MTN Mobile Money to <strong>0704 014 566</strong> or Airtel Money to <strong>0775 256 007</strong> (Bonki Enterprises). Then enter your transaction ID when registering and we'll activate your listing within 24 hours.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">How long before my listing goes live? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Once we confirm your payment, your listing goes live within 24 hours. We'll call you on the number you registered with to confirm everything is correct.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Do you take commission from my jobs? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">No. We only charge the listing fee. Once a client contacts you directly, all job negotiations and payments are between you and the client. You keep 100% of everything you earn.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Can I update my details after listing? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Yes. Call us on 0704 014 566 or 0775 256 007 and we'll update your profile details — contact, location, description or pricing — at no extra charge.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">What happens when my listing expires? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">We'll call you a few days before expiry to remind you to renew. Your listing is paused (not deleted) until you renew. All your details are saved so renewal is quick.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">What areas does Bonki SiteLink cover? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">All of Uganda. We cover Kampala, Wakiso, Mukono, Entebbe, Jinja, Mbarara, Gulu, Lira, Fort Portal, Mbale, Masaka and all other districts. Any client in Uganda can find you.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>Ready to Start Getting Orders?</h2>
+  <p>Join Bonki SiteLink today. Fill in your details, pay the listing fee and start receiving calls from clients across Uganda.</p>
+  <button class="btn-cta" onclick="window.location.href='sitelink-register2.html'">List My Business Now →</button>
+</div>
+
+<footer>
+  <p>© 2026 Bonki SiteLink Uganda — A Bonki Enterprises Product · 📞 +256 704 014 566 / +256 775 256 007</p>
+</footer>
+
+<script>
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    item.classList.toggle('open');
+  }
+</script>
+
+</body>
+</html>
